@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+  background: #07070a;
+}
+body {
+  margin: 0;
+  background: #07070a;
+  color: #f4f4f5;
+  font-family: var(--font-geist-sans), sans-serif;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+::selection {
+  background: rgba(129, 140, 248, 0.3);
+  color: white;
+}
+
+.grid-bg {
+  opacity: 0.55;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(to bottom, black 15%, transparent 88%);
+}
+
+.glow-card {
+  position: relative;
+  isolation: isolate;
+}
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(129, 140, 248, 0.42),
+    transparent 45%,
+    rgba(56, 189, 248, 0.28)
+  );
+  filter: blur(14px);
+  transition: opacity 0.35s ease;
+}
+.glow-card:hover::before {
+  opacity: 0.75;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@theme {
+  --animate-marquee: marquee 22s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: var(--animate-marquee);
+}
