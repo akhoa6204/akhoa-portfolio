@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@tailwindcss/postcss": "latest",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "firebase-admin": "latest",
     "framer-motion": "latest",
     "lucide-react": "latest",
@@ -17,8 +19,8 @@
     "react": "latest",
     "react-dom": "latest",
     "react-icons": "latest",
-    "tailwindcss": "latest",
-    "server-only": "latest"
+    "server-only": "latest",
+    "tailwindcss": "latest"
   },
   "devDependencies": {
     "@types/node": "latest",
