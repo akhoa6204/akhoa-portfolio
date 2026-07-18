@@ -3,12 +3,12 @@ import type { Profile } from "@/types/portfolio";
 
 export function Contact({ profile }: { profile: Profile }) {
   return (
-    <section className="mx-auto max-w-6xl px-5 pb-8 lg:px-8" id="contact">
-      <div className="glow-card rounded-[2rem] border border-white/10 bg-gradient-to-br from-indigo-500/20 via-violet-500/10 to-sky-500/10 p-8 sm:p-12">
+    <section id="contact" className="mx-auto max-w-7xl px-5 pb-8 lg:px-8">
+      <div className="glow-card rounded-4xl border border-white/10 bg-linear-to-br from-indigo-500/20 via-violet-500/10 to-sky-500/10 p-8 sm:p-12">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-indigo-200">
           Have a role or project in mind?
         </p>
-        <h2 className="mt-6 max-w-4xl text-balance text-4xl font-semibold tracking-[-0.05em] text-white sm:text-6xl">
+        <h2 className="mt-6 max-w-4xl text-balance text-4xl font-semibold tracking-tighter text-white sm:text-6xl">
           Let&apos;s build something useful together.
         </h2>
         <a

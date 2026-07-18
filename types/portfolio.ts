@@ -19,17 +19,47 @@ export type Profile = {
   avatarUrl: string;
 };
 
+export type ProjectFeature = {
+  title: string;
+  description: string;
+};
+
+export type ProjectChallenge = {
+  title: string;
+  problem: string;
+  solution: string;
+};
+
+export type ProjectImage = {
+  url: string;
+  alt: string;
+};
+
 export type Project = {
   id: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   description: string;
-  href: string;
+
+  overview?: string[];
+  features?: ProjectFeature[];
+  challenges?: ProjectChallenge[];
+
+  role?: string;
+  duration?: string;
+  status?: string;
+
+  githubUrl?: string;
+  demoUrl?: string;
+  videoUrl?: string;
+
   tags: string[];
-  accent: "indigo" | "cyan" | "violet";
+  accent?: string;
   order: number;
   visible: boolean;
+
   imageUrl?: string;
+  gallery?: ProjectImage[];
 };
 
 export type Skill = {
@@ -38,14 +68,6 @@ export type Skill = {
   detail: string;
   icon: "code" | "server" | "database" | "layers";
   order: number;
-};
-
-export type PortfolioData = {
-  profile: Profile;
-  projects: Project[];
-  skills: Skill[];
-  technologies: Technology[];
-  career: CareerData;
 };
 
 export type Technology = {
@@ -61,6 +83,7 @@ export type CareerItem = {
   details?: string[];
   order?: number;
   visible?: boolean;
+  href?: string;
 };
 
 export type CareerData = {

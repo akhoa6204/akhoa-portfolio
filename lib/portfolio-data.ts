@@ -4,63 +4,71 @@ import { defaultPortfolioData } from "@/lib/default-data";
 import { getAdminDatabase } from "@/lib/firebase-admin";
 import type { PortfolioData, Project, Skill } from "@/types/portfolio";
 
-function normalizeData(value: Partial<PortfolioData>): PortfolioData {
-  const projects = Array.isArray(value.projects)
-    ? value.projects
-    : value.projects
-      ? Object.values(value.projects)
-      : defaultPortfolioData.projects;
-
-  const skills = Array.isArray(value.skills)
-    ? value.skills
-    : value.skills
-      ? Object.values(value.skills)
-      : defaultPortfolioData.skills;
-
-  return {
-    profile: {
-      ...defaultPortfolioData.profile,
-      ...value.profile,
-      socials: {
-        ...defaultPortfolioData.profile.socials,
-        ...value.profile?.socials,
-      },
-      aboutParagraphs:
-        value.profile?.aboutParagraphs ??
-        defaultPortfolioData.profile.aboutParagraphs,
-    },
-    projects: (projects as Project[])
-      .filter((project) => project.visible !== false)
-      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
-    skills: (skills as Skill[]).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
-    technologies: value.technologies ?? defaultPortfolioData.technologies,
-    career: value.career ?? defaultPortfolioData.career,
-  };
-}
-
-export async function getPortfolioData(): Promise<PortfolioData> {
-  const database = getAdminDatabase();
-
-  if (!database) {
-    console.warn(
-      "Firebase environment variables are missing. Using local fallback data.",
-    );
-    return defaultPortfolioData;
+function normalizeCollection<T>(value: unknown): T[] {
+  if (Array.isArray(value)) {
+    return value.filter(Boolean) as T[];
   }
 
+  if (typeof value === "object" && value !== null) {
+    return Object.values(value).filter(Boolean) as T[];
+  }
+
+  return [];
+}
+
+export async function getBranchData<K extends keyof PortfolioData>(
+  path: K,
+): Promise<PortfolioData[K]> {
+  const fallbackValue = defaultPortfolioData[path];
+
   try {
-    const snapshot = await database.ref("portfolio").get();
+    const database = getAdminDatabase();
+
+    if (!database) {
+      console.warn(
+        `Firebase is unavailable. Using fallback data for /portfolio/${String(path)}.`,
+      );
+
+      return fallbackValue;
+    }
+
+    const snapshot = await database.ref(`portfolio/${String(path)}`).get();
 
     if (!snapshot.exists()) {
       console.warn(
-        "Firebase path /portfolio is empty. Using local fallback data.",
+        `Firebase path /portfolio/${String(path)} is empty. Using fallback data.`,
       );
-      return defaultPortfolioData;
+
+      return fallbackValue;
     }
 
-    return normalizeData(snapshot.val() as Partial<PortfolioData>);
+    const value = snapshot.val();
+
+    if (Array.isArray(fallbackValue)) {
+      return normalizeCollection(value) as PortfolioData[K];
+    }
+
+    return value as PortfolioData[K];
   } catch (error) {
-    console.error("Unable to retrieve portfolio data from Firebase:", error);
-    return defaultPortfolioData;
+    console.error(
+      `Unable to retrieve Firebase branch /portfolio/${String(path)}:`,
+      error,
+    );
+
+    return fallbackValue;
   }
+}
+
+export async function getBranchItem<T extends Record<string, unknown>>(
+  path: keyof PortfolioData,
+  field: keyof T,
+  targetValue: unknown,
+): Promise<T | null> {
+  const branch = await getBranchData(path);
+
+  const items = normalizeCollection<T>(branch);
+
+  return (
+    items.find((item) => item[field] === targetValue && item.visible) ?? null
+  );
 }

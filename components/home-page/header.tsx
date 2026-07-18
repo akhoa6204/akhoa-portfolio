@@ -1,4 +1,5 @@
 import type { Profile } from "@/types/portfolio";
+import Link from "next/link";
 
 const navItems = [
   { label: "Career", href: "#career" },
@@ -9,14 +10,14 @@ const navItems = [
 
 export function Header({ profile }: { profile: Profile }) {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black/35 backdrop-blur-xl">
+    <header className="sticky inset-x-0 top-0 z-50 border-b border-white/10 bg-black/35 backdrop-blur-xl">
       <nav
         aria-label="Primary navigation"
-        className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 lg:px-8"
+        className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 lg:px-8"
       >
         {/* Logo */}
-        <a
-          href="#top"
+        <Link
+          href="/#top"
           className="
             group
             font-mono
@@ -34,26 +35,24 @@ export function Header({ profile }: { profile: Profile }) {
           <span className="text-indigo-400 transition-colors duration-300 group-hover:text-indigo-300">
             .
           </span>
-        </a>
+        </Link>
 
         {/* Navigation */}
         <div className="hidden items-center gap-8 text-sm md:flex">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.href}
-              href={item.href}
+              href={`/${item.href}`}
               className="
                 relative
                 text-zinc-400
                 transition-all
                 duration-300
-
                 hover:text-white
-
                 after:absolute
                 after:-bottom-1
                 after:left-0
-                after:h-[2px]
+                after:h-0.5
                 after:w-0
                 after:rounded-full
                 after:bg-indigo-400
@@ -64,12 +63,11 @@ export function Header({ profile }: { profile: Profile }) {
               "
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </div>
 
-        {/* CTA */}
-        <a
+        <Link
           href={`mailto:${profile.email}`}
           className="
             rounded-full
@@ -100,7 +98,7 @@ export function Header({ profile }: { profile: Profile }) {
           "
         >
           Let&apos;s talk
-        </a>
+        </Link>
       </nav>
     </header>
   );

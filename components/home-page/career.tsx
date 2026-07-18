@@ -8,8 +8,8 @@ type CareerProps = {
 
 export function Career({ career }: CareerProps) {
   return (
-    <section id="career" className="border-y border-white/10 py-28">
-      <div className="mx-auto max-w-6xl px-5 lg:px-8">
+    <section id="career" className="border-y border-white/10 py-20">
+      <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <Reveal>
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-indigo-300">
             01 / Career
@@ -27,7 +27,7 @@ export function Career({ career }: CareerProps) {
       </div>
 
       <Reveal>
-        <div className="mx-auto max-w-6xl border-x border-white/10">
+        <div className="mx-auto max-w-7xl border-x border-white/10">
           <CareerGroup
             label="Work experience"
             items={career.experience}

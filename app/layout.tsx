@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { InitialLoader } from "@/components/ui/initial-loader";
+import { Header } from "@/components/home-page/header";
+import { Footer } from "@/components/home-page/footer";
+import { getBranchData } from "@/lib/portfolio-data";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,16 +48,19 @@ export const viewport: Viewport = {
   themeColor: "#07070a",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const profile = await getBranchData("profile");
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Header profile={profile} />
         <InitialLoader />
         {children}
+        <Footer name={profile.name} />
       </body>
     </html>
   );

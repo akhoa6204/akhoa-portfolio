@@ -19,7 +19,7 @@ export function Hero({ profile }: { profile: Profile }) {
   return (
     <section
       id="top"
-      className="relative mx-auto grid min-h-screen max-w-6xl items-center gap-14 px-5 pb-20 pt-28 lg:grid-cols-[1.08fr_.92fr] lg:px-8"
+      className="relative mx-auto grid min-h-screen max-w-7xl items-center gap-14 px-5 py-20 lg:grid-cols-[1.08fr_.92fr] lg:px-8"
     >
       <div className="relative z-10">
         <Reveal>

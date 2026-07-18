@@ -11,7 +11,7 @@ const icons = {
 
 export function Skills({ skills }: { skills: Skill[] }) {
   return (
-    <section id="skills" className="mx-auto max-w-6xl px-5 py-28 lg:px-8">
+    <section id="skills" className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
       <p className="font-mono text-xs uppercase tracking-[0.2em] text-indigo-300">
         03 / Capabilities
       </p>

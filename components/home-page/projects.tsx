@@ -5,9 +5,9 @@ export function Projects({ projects }: { projects: Project[] }) {
   return (
     <section
       id="projects"
-      className="border-y border-white/10 bg-white/[0.02] py-28"
+      className="border-y border-white/10 bg-white/2 py-20"
     >
-      <div className="mx-auto max-w-6xl px-5 lg:px-8">
+      <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-indigo-300">
           02 / Selected projects
         </p>

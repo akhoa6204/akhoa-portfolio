@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import type { Project } from "@/types/portfolio";
+import Link from "next/link";
 
 const accents = {
   indigo: "from-indigo-500/25 via-violet-500/10 to-transparent",
@@ -88,15 +89,13 @@ export function ProjectCard({
           </h3>
         </div>
 
-        <a
-          href={project.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Open ${project.title} on GitHub`}
+        <Link
+          href={`/projects/${project.id}`}
+          aria-label={`Redirect /projects/${project.id}`}
           className="rounded-full border border-white/10 p-3 text-zinc-300 transition group-hover:border-indigo-400/40 group-hover:bg-indigo-500/10 group-hover:text-white"
         >
           <ArrowUpRight className="h-5 w-5" />
-        </a>
+        </Link>
       </div>
 
       <p className="mt-4 text-sm leading-7 text-zinc-400">
