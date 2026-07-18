@@ -29,7 +29,7 @@ export function ProjectCard({
       className="glow-card group rounded-[1.75rem] border border-white/10 bg-zinc-950/65 p-6 shadow-2xl shadow-black/30"
     >
       <div
-        className={`relative h-56 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br ${accents[project.accent]}`}
+        className={`relative h-56 overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br ${accents[project.accent as keyof typeof accents]}`}
       >
         {project.imageUrl ? (
           <>

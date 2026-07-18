@@ -54,7 +54,7 @@ export type Project = {
   videoUrl?: string;
 
   tags: string[];
-  accent?: string;
+  accent: string;
   order: number;
   visible: boolean;
 

@@ -5,6 +5,7 @@ import { InitialLoader } from "@/components/ui/initial-loader";
 import { Header } from "@/components/home-page/header";
 import { Footer } from "@/components/home-page/footer";
 import { getBranchData } from "@/lib/portfolio-data";
+import { Profile } from "@/types/portfolio";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,7 +52,7 @@ export const viewport: Viewport = {
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const profile = await getBranchData("profile");
+  const profile = await getBranchData<Profile>("profile");
   return (
     <html lang="en">
       <body

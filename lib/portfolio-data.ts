@@ -1,8 +1,16 @@
 import "server-only";
 
-import { defaultPortfolioData } from "@/lib/default-data";
 import { getAdminDatabase } from "@/lib/firebase-admin";
-import type { PortfolioData, Project, Skill } from "@/types/portfolio";
+
+export const portfolioPaths = [
+  "profile",
+  "career",
+  "projects",
+  "skills",
+  "technologies",
+] as const;
+
+export type PortfolioPath = (typeof portfolioPaths)[number];
 
 function normalizeCollection<T>(value: unknown): T[] {
   if (Array.isArray(value)) {
@@ -16,59 +24,35 @@ function normalizeCollection<T>(value: unknown): T[] {
   return [];
 }
 
-export async function getBranchData<K extends keyof PortfolioData>(
-  path: K,
-): Promise<PortfolioData[K]> {
-  const fallbackValue = defaultPortfolioData[path];
+export async function getBranchData<T>(path: PortfolioPath): Promise<T> {
+  const database = getAdminDatabase();
 
-  try {
-    const database = getAdminDatabase();
-
-    if (!database) {
-      console.warn(
-        `Firebase is unavailable. Using fallback data for /portfolio/${String(path)}.`,
-      );
-
-      return fallbackValue;
-    }
-
-    const snapshot = await database.ref(`portfolio/${String(path)}`).get();
-
-    if (!snapshot.exists()) {
-      console.warn(
-        `Firebase path /portfolio/${String(path)} is empty. Using fallback data.`,
-      );
-
-      return fallbackValue;
-    }
-
-    const value = snapshot.val();
-
-    if (Array.isArray(fallbackValue)) {
-      return normalizeCollection(value) as PortfolioData[K];
-    }
-
-    return value as PortfolioData[K];
-  } catch (error) {
-    console.error(
-      `Unable to retrieve Firebase branch /portfolio/${String(path)}:`,
-      error,
-    );
-
-    return fallbackValue;
+  if (!database) {
+    throw new Error("Firebase Admin is not initialized.");
   }
+
+  const snapshot = await database.ref(`portfolio/${path}`).get();
+
+  if (!snapshot.exists()) {
+    throw new Error(`Firebase path /portfolio/${path} does not exist.`);
+  }
+
+  const value = snapshot.val();
+
+  return (Array.isArray(value) ? normalizeCollection(value) : value) as T;
 }
 
 export async function getBranchItem<T extends Record<string, unknown>>(
-  path: keyof PortfolioData,
+  path: PortfolioPath,
   field: keyof T,
   targetValue: unknown,
 ): Promise<T | null> {
-  const branch = await getBranchData(path);
-
+  const branch = await getBranchData<unknown>(path);
   const items = normalizeCollection<T>(branch);
 
   return (
-    items.find((item) => item[field] === targetValue && item.visible) ?? null
+    items.find(
+      (item) => item[field] === targetValue && item.visible !== false,
+    ) ?? null
   );
 }

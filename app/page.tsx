@@ -8,11 +8,18 @@ import { Skills } from "@/components/home-page/skills";
 import { TechnologyStrip } from "@/components/home-page/technology-strip";
 import { Career } from "@/components/home-page/career";
 import { getBranchData } from "@/lib/portfolio-data";
+import {
+  CareerData,
+  Profile,
+  Project,
+  Skill,
+  Technology,
+} from "@/types/portfolio";
 
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const profile = await getBranchData("profile");
+  const profile = await getBranchData<Profile>("profile");
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
   return {
@@ -36,11 +43,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const profile = await getBranchData("profile");
-  const skills = await getBranchData("skills");
-  const technologies = await getBranchData("technologies");
-  const career = await getBranchData("career");
-  const projects = await getBranchData("projects");
+  const profile = await getBranchData<Profile>("profile");
+  const skills = await getBranchData<Skill[]>("skills");
+  const technologies = await getBranchData<Technology[]>("technologies");
+  const career = await getBranchData<CareerData>("career");
+  const projects = await getBranchData<Project[]>("projects");
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
   const jsonLd = {
@@ -64,8 +71,8 @@ export default async function HomePage() {
         }}
       />
       <main className="relative overflow-hidden">
-        <div className="grid-bg pointer-events-none absolute inset-x-0 top-0 h-[850px]" />
-        <div className="pointer-events-none absolute left-1/2 top-[-280px] h-[560px] w-[560px] -translate-x-1/2 rounded-full bg-indigo-500/20 blur-[120px]" />
+        <div className="grid-bg pointer-events-none absolute inset-x-0 top-0 h-213" />
+        <div className="pointer-events-none absolute left-1/2 -top-70 h-140 w-140 -translate-x-1/2 rounded-full bg-indigo-500/20 blur-[120px]" />
         <Hero profile={profile} />
         <TechnologyStrip technologies={technologies} />
         <Career career={career} />
