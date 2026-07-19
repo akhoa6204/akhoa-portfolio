@@ -22,7 +22,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "AKhoaIsMe - Full-stack Developer",
+    default: "AKhoaIsMe - Fullstack Developer",
     template: "%s | AKhoaIsMe",
   },
   description:
