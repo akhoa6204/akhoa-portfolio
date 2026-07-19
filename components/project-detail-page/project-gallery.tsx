@@ -37,8 +37,8 @@ export function ProjectGallery({
         Project gallery
       </h2>
 
-      <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03]">
-        <div className="relative aspect-[16/9] w-full">
+      <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/3">
+        <div className="relative aspect-video w-full">
           <Image
             src={mainImage.url}
             alt={mainImage.alt}
@@ -55,9 +55,9 @@ export function ProjectGallery({
           {remainingImages.map((image) => (
             <div
               key={image.url}
-              className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]"
+              className="overflow-hidden rounded-2xl border border-white/10 bg-white/3"
             >
-              <div className="relative aspect-[16/10]">
+              <div className="relative aspect-16/10">
                 <Image
                   src={image.url}
                   alt={image.alt}
