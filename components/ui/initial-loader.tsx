@@ -45,7 +45,7 @@ export function InitialLoader() {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex min-h-screen items-center justify-center overflow-hidden bg-black text-white transition-opacity duration-150 ${
+      className={`fixed inset-0 z-9999 flex min-h-screen items-center justify-center overflow-hidden bg-black text-white transition-opacity duration-150 ${
         progress === 100 ? "opacity-0" : "opacity-100"
       }`}
       role="status"
@@ -55,9 +55,9 @@ export function InitialLoader() {
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/10 blur-3xl" />
 
-        <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        <div className="absolute inset-x-0 top-1/2 h-px bg-linear-to-r from-transparent via-white/20 to-transparent" />
 
-        <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full border border-white/5" />
+        <div className="absolute left-1/2 top-1/2 h-130 w-130 -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full border border-white/5" />
       </div>
 
       <div className="relative flex w-full max-w-md flex-col items-center px-6">
@@ -66,17 +66,19 @@ export function InitialLoader() {
         </p>
 
         <div className="flex items-end">
-          <span className="text-[clamp(5rem,18vw,10rem)] font-semibold leading-none tracking-[-0.09em] tabular-nums">
+          <span className="inline-block w-[3ch] text-right text-[clamp(5rem,18vw,10rem)] font-semibold leading-none tracking-[-0.09em] tabular-nums">
             {String(progress).padStart(2, "0")}
           </span>
 
-          <span className="mb-3 ml-3 text-xl font-light text-white/40">%</span>
+          <span className="mb-3 ml-3 shrink-0 text-xl font-light text-white/40">
+            %
+          </span>
         </div>
 
         <div className="mt-8 h-px w-full overflow-hidden bg-white/15">
           <div
-            className="h-full bg-white transition-[width] duration-75 ease-out"
-            style={{ width: `${progress}%` }}
+            className="h-full origin-left bg-white transition-transform duration-75 ease-out"
+            style={{ transform: `scaleX(${progress / 100})` }}
           />
         </div>
 
