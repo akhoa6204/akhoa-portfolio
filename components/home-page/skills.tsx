@@ -30,7 +30,7 @@ export function Skills({ skills }: { skills: Skill[] }) {
             const Icon = icons[skill.icon] ?? Code2;
             return (
               <Reveal key={skill.id} delay={index * 0.06} className="h-full">
-                <div className="h-full rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition hover:-translate-y-1 hover:border-indigo-400/35 hover:bg-indigo-500/[0.06]">
+                <div className="h-full rounded-2xl border border-white/10 bg-white/3 p-5 transition hover:-translate-y-1 hover:border-indigo-400/35 hover:bg-indigo-500/[0.06]">
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-indigo-400/20 bg-indigo-500/10 text-indigo-300">
                     <Icon className="h-5 w-5" />
                   </div>
